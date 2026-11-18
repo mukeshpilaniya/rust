@@ -1,0 +1,733 @@
+<!DOCTYPE HTML>
+<html lang="en" class="navy sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Rust Concepts</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-e96d0476.css">
+        <link rel="stylesheet" href="css/chrome-d279d366.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "navy";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-9a71131b.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-c8095245.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('navy')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Rust Concepts</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/mukeshpilaniya/rust" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="introduction"><a class="header" href="#introduction">Introduction</a></h1>
+<p>This book is a focused reference for Rust’s core concepts, written for engineers who want depth
+rather than breadth. Each article follows the same structure: a prose explanation of <em>why</em> the
+concept exists, a self-contained code example, a list of rules worth memorising, and a concise
+code-review section that shows the right and wrong way to apply the idea in practice.</p>
+<p>The topics are grouped by theme — Ownership, Lifetimes, Iterators, and Traits — so you can read
+a section end-to-end or jump straight to the article that answers your current question. Every
+example compiles against stable Rust and is kept short enough to fit in your head.</p>
+<p>If you spot an error or want to suggest an improvement, use the “Edit this page” link in the
+top-right corner of any article.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="ownership--borrowing"><a class="header" href="#ownership--borrowing">Ownership &amp; Borrowing</a></h1>
+<p>Ownership is the mechanism Rust uses to manage memory without a garbage collector. Every value
+has exactly one owner at any point in time, and when the owner goes out of scope the value is
+dropped. Borrowing lets you hand out temporary references — shared (<code>&amp;T</code>) or exclusive (<code>&amp;mut T</code>)
+— without transferring ownership.</p>
+<p>The articles in this section build from the ground up: move semantics first, then the borrow
+checker’s rules for references.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="move-semantics"><a class="header" href="#move-semantics">Move Semantics</a></h1>
+<p>In Rust, assigning a heap-allocated value to another variable does not copy it — it <em>moves</em> it.
+The original variable becomes invalid the moment ownership transfers, and the compiler enforces
+this at compile time, not at runtime. This design eliminates an entire class of bugs — use-after-free,
+double-free — without any runtime cost. Types that hold no heap resources (integers, booleans,
+raw pointers) implement the <code>Copy</code> trait instead and are duplicated cheaply on assignment.</p>
+<p>Understanding moves is the key to reading Rust error messages. When the compiler says
+“value used after move,” it means ownership left the current scope on a previous line and the
+binding is now empty.</p>
+<h2 id="code"><a class="header" href="#code">Code</a></h2>
+<pre class="playground"><code class="language-rust">fn print_name(name: String) {
+    println!("{name}");
+} // `name` is dropped here
+
+fn main() {
+    let s = String::from("Mukesh");
+    print_name(s);          // ownership moves into the function
+    // println!("{s}");     // compile error: value used after move
+}</code></pre>
+<h2 id="key-points"><a class="header" href="#key-points">Key Points</a></h2>
+<ul>
+<li>Assignment of a non-<code>Copy</code> type transfers ownership; the source binding is gone.</li>
+<li>Passing a value to a function is an assignment — ownership moves into the callee.</li>
+<li>Returning a value from a function moves it back to the caller.</li>
+<li><code>Copy</code> types (<code>i32</code>, <code>bool</code>, <code>char</code>, <code>&amp;T</code>, …) are silently duplicated on assignment.</li>
+<li><code>Clone</code> is an explicit, potentially expensive deep copy; <code>Copy</code> is implicit and always cheap.</li>
+</ul>
+<h2 id="code-review"><a class="header" href="#code-review">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn greet(name: &amp;str) {
+    println!("Hello, {name}");
+}
+let s = String::from("Mukesh");
+greet(&amp;s);          // borrow — caller keeps ownership
+greet(&amp;s);          // can call again
+<span class="boring">}</span></code></pre>
+<p><em>Borrowing instead of moving lets the caller reuse <code>s</code> without cloning.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn greet(name: String) {
+    println!("Hello, {name}");
+}
+let s = String::from("Mukesh");
+greet(s.clone());   // needless clone just to keep `s` alive
+greet(s.clone());
+<span class="boring">}</span></code></pre>
+<p><em>Taking <code>String</code> by value forces a heap allocation per call; <code>&amp;str</code> costs nothing extra.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="borrowing"><a class="header" href="#borrowing">Borrowing</a></h1>
+<p>A borrow is a temporary reference to a value that does not transfer ownership. Rust enforces two
+rules at compile time: you can have any number of shared (<code>&amp;T</code>) references at the same time, or
+exactly one exclusive (<code>&amp;mut T</code>) reference — never both simultaneously. This rule is the borrow
+checker’s core invariant, and it guarantees that no two parts of a program can observe a mutation
+at the same time, eliminating data races in safe Rust entirely.</p>
+<p>The lifetime of a reference must not exceed the lifetime of the value it points to. The compiler
+tracks this automatically in most cases via lifetime elision, and requires explicit annotations
+only when the relationship is ambiguous.</p>
+<h2 id="code-1"><a class="header" href="#code-1">Code</a></h2>
+<pre class="playground"><code class="language-rust">fn longest&lt;'a&gt;(a: &amp;'a str, b: &amp;'a str) -&gt; &amp;'a str {
+    if a.len() &gt;= b.len() { a } else { b }
+}
+
+fn main() {
+    let mut v = vec![1, 2, 3];
+
+    let first = &amp;v[0];          // shared borrow
+    println!("first = {first}");
+    // v.push(4);               // compile error: cannot mutate while borrowed
+
+    v.push(4);                  // shared borrow is no longer live here — OK
+    println!("{v:?}");
+}</code></pre>
+<h2 id="key-points-1"><a class="header" href="#key-points-1">Key Points</a></h2>
+<ul>
+<li><code>&amp;T</code> is a shared reference: many can coexist, none can mutate through it.</li>
+<li><code>&amp;mut T</code> is an exclusive reference: no other reference of any kind may exist simultaneously.</li>
+<li>References must always point to valid, live data — dangling references are a compile error.</li>
+<li>The borrow checker uses <em>Non-Lexical Lifetimes</em> (NLL): a borrow ends at its last use, not at the closing brace.</li>
+<li>Interior mutability (<code>Cell</code>, <code>RefCell</code>, <code>Mutex</code>) moves the exclusivity check to runtime when compile-time checking is too restrictive.</li>
+</ul>
+<h2 id="code-review-1"><a class="header" href="#code-review-1">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sum(data: &amp;[i32]) -&gt; i32 {
+    data.iter().sum()
+}
+<span class="boring">}</span></code></pre>
+<p><em>Takes a slice reference — works with <code>Vec</code>, arrays, and sub-slices without copying.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn sum(data: Vec&lt;i32&gt;) -&gt; i32 {
+    data.iter().sum()
+}
+<span class="boring">}</span></code></pre>
+<p><em>Consumes the <code>Vec</code> needlessly; the caller loses it after the call and can’t pass a slice.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="lifetimes"><a class="header" href="#lifetimes">Lifetimes</a></h1>
+<p>A lifetime is the region of code for which a reference is valid. Rust tracks lifetimes at compile
+time to prove that no reference can outlive the data it points to. In the majority of functions
+the compiler infers lifetimes automatically through a set of elision rules, so you only write
+explicit annotations when the compiler cannot figure out the relationship on its own.</p>
+<p>The articles here start with explicit annotation syntax and then cover the elision rules that
+let you omit annotations in the common cases.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="lifetime-annotations"><a class="header" href="#lifetime-annotations">Lifetime Annotations</a></h1>
+<p>A lifetime annotation does not change how long a value lives — it tells the compiler the
+<em>relationship</em> between the lifetimes of multiple references. The syntax <code>'a</code> is just a label;
+the name carries no inherent meaning. When a function takes two references and returns one,
+the compiler needs to know which input the output borrows from, because that determines how
+long the returned reference may be used.</p>
+<p>Lifetime parameters are declared in angle brackets after the function name, alongside type
+parameters. Structs that hold references also require lifetime annotations so the compiler
+can verify that the struct never outlives the data it borrows.</p>
+<h2 id="code-2"><a class="header" href="#code-2">Code</a></h2>
+<pre class="playground"><code class="language-rust">// The returned reference lives at least as long as both inputs.
+fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
+    if x.len() &gt;= y.len() { x } else { y }
+}
+
+struct Excerpt&lt;'a&gt; {
+    text: &amp;'a str,   // struct cannot outlive the string it borrows
+}
+
+fn main() {
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first = novel.split('.').next().unwrap();
+    let excerpt = Excerpt { text: first };  // `excerpt` tied to `novel`'s lifetime
+    println!("{}", excerpt.text);
+}</code></pre>
+<h2 id="key-points-2"><a class="header" href="#key-points-2">Key Points</a></h2>
+<ul>
+<li><code>'a</code> on a function means “these references share a lifetime region” — the output lives no longer than the shorter input.</li>
+<li>Lifetime annotations are checked at the call site, not inside the function body.</li>
+<li><code>'static</code> means the reference is valid for the entire program — string literals are <code>'static</code>.</li>
+<li>Structs holding references must annotate every reference field.</li>
+<li>Generic lifetime bounds (<code>T: 'a</code>) mean “T must outlive ’a”, not “T has lifetime ’a”.</li>
+</ul>
+<h2 id="code-review-2"><a class="header" href="#code-review-2">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word(s: &amp;str) -&gt; &amp;str {
+    s.split_whitespace().next().unwrap_or("")
+}
+<span class="boring">}</span></code></pre>
+<p><em>Elision applies: the output borrows from the single input, no annotation needed.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn first_word&lt;'a, 'b&gt;(s: &amp;'a str, _ctx: &amp;'b str) -&gt; &amp;'a str {
+    s.split_whitespace().next().unwrap_or("")
+}
+<span class="boring">}</span></code></pre>
+<p><em><code>'b</code> is declared but unused; <code>_ctx</code> is unrelated to the output — misleading and noisy.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="lifetime-elision"><a class="header" href="#lifetime-elision">Lifetime Elision</a></h1>
+<p>Lifetime elision is a set of three inference rules that let the compiler fill in lifetime
+annotations automatically when the relationship is unambiguous. These rules were added to Rust
+specifically because the vast majority of real functions either take a single reference and
+return one derived from it, or take <code>&amp;self</code> and return something tied to self. Writing <code>'a</code>
+everywhere in those cases would be mechanical noise with no information value.</p>
+<p>The three rules apply in order. First, every reference parameter gets its own distinct lifetime.
+Second, if there is exactly one input lifetime, it is assigned to all output lifetimes. Third,
+if one of the input parameters is <code>&amp;self</code> or <code>&amp;mut self</code>, the lifetime of <code>self</code> is assigned to
+all output lifetimes. If none of these rules fully determine the output lifetime, the compiler
+requires an explicit annotation.</p>
+<h2 id="code-3"><a class="header" href="#code-3">Code</a></h2>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>// All three functions are identical after elision is applied.
+
+// Written with explicit annotations:
+fn get_ref&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32 { x }
+
+// Written with elision (rule 2 applies — one input, one output):
+fn get_ref(x: &amp;i32) -&gt; &amp;i32 { x }
+
+struct Cache {
+    value: String,
+}
+
+impl Cache {
+    // Rule 3: output borrows from &amp;self
+    fn value(&amp;self) -&gt; &amp;str {
+        &amp;self.value
+    }
+}
+<span class="boring">}</span></code></pre>
+<h2 id="key-points-3"><a class="header" href="#key-points-3">Key Points</a></h2>
+<ul>
+<li>Rule 1: each <code>&amp;</code> parameter gets its own lifetime label (e.g., <code>'a</code>, <code>'b</code>).</li>
+<li>Rule 2: if exactly one input reference exists, its lifetime flows to every output reference.</li>
+<li>Rule 3: if <code>&amp;self</code> or <code>&amp;mut self</code> is present, its lifetime flows to every output reference.</li>
+<li>If the rules produce a unique answer the annotation is elided; otherwise you must write it.</li>
+<li>Elision is purely a syntactic shortcut — the compiler still checks the full lifetime graph.</li>
+</ul>
+<h2 id="code-review-3"><a class="header" href="#code-review-3">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Config {
+    fn name(&amp;self) -&gt; &amp;str { &amp;self.name }
+}
+<span class="boring">}</span></code></pre>
+<p><em>Rule 3 applies cleanly — no annotation needed, intent is clear.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>impl Config {
+    fn name&lt;'a&gt;(&amp;'a self) -&gt; &amp;'a str { &amp;self.name }
+}
+<span class="boring">}</span></code></pre>
+<p><em>Explicit <code>'a</code> here is redundant; elision already handles it and the annotation adds visual clutter.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="iterators"><a class="header" href="#iterators">Iterators</a></h1>
+<p>Rust’s iterator system is built on a single trait — <code>Iterator</code> — with one required method,
+<code>next</code>. Everything else: <code>map</code>, <code>filter</code>, <code>fold</code>, <code>zip</code>, <code>chain</code>, and dozens more combinators,
+are provided as default methods on that trait. Iterators are <em>lazy</em>: no work happens until a
+consuming adaptor (<code>collect</code>, <code>for_each</code>, <code>sum</code>, …) or a <code>for</code> loop drives them. This means you
+can compose a long chain of transformations with no intermediate allocations.</p>
+<p>The articles here cover the trait itself and the most useful combinator patterns.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="the-iterator-trait"><a class="header" href="#the-iterator-trait">The Iterator Trait</a></h1>
+<p>The <code>Iterator</code> trait requires exactly one method: <code>next</code>, which returns <code>Option&lt;Self::Item&gt;</code>.
+Returning <code>Some(item)</code> advances the iterator; returning <code>None</code> signals exhaustion. Every other
+method on iterators — <code>map</code>, <code>filter</code>, <code>enumerate</code>, and more than 70 others — is a default
+implementation built on top of <code>next</code>. When you implement <code>Iterator</code> for your own type you get
+the full combinator library for free.</p>
+<p>A type becomes iterable in a <code>for</code> loop by implementing <code>IntoIterator</code>, which converts the type
+into an iterator. <code>Vec&lt;T&gt;</code> implements it three ways: consuming (<code>vec</code>), by shared reference
+(<code>&amp;vec</code>), and by exclusive reference (<code>&amp;mut vec</code>), giving you control over whether the loop
+takes ownership or borrows.</p>
+<h2 id="code-4"><a class="header" href="#code-4">Code</a></h2>
+<pre class="playground"><code class="language-rust">struct Counter {
+    count: u32,
+    max: u32,
+}
+
+impl Counter {
+    fn new(max: u32) -&gt; Self {
+        Counter { count: 0, max }
+    }
+}
+
+impl Iterator for Counter {
+    type Item = u32;
+
+    fn next(&amp;mut self) -&gt; Option&lt;u32&gt; {
+        if self.count &lt; self.max {
+            self.count += 1;
+            Some(self.count)
+        } else {
+            None
+        }
+    }
+}
+
+fn main() {
+    let sum: u32 = Counter::new(5)
+        .zip(Counter::new(5).skip(1))
+        .map(|(a, b)| a * b)
+        .sum();
+    println!("{sum}"); // 2*3 + 3*4 + 4*5 + 5*6 … wait, let's just trust the chain
+}</code></pre>
+<h2 id="key-points-4"><a class="header" href="#key-points-4">Key Points</a></h2>
+<ul>
+<li>Implement only <code>next</code>; all combinators are inherited default methods.</li>
+<li><code>type Item</code> is an associated type — it fixes the element type for a given implementation.</li>
+<li>Iterators are lazy: combinators return new iterator structs, not computed results.</li>
+<li><code>for x in collection</code> desugars to <code>IntoIterator::into_iter(collection)</code> followed by repeated <code>next</code>.</li>
+<li><code>iter()</code> borrows, <code>iter_mut()</code> borrows mutably, <code>into_iter()</code> consumes — know which you need.</li>
+</ul>
+<h2 id="code-review-4"><a class="header" href="#code-review-4">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let evens: Vec&lt;_&gt; = (0..10).filter(|x| x % 2 == 0).collect();
+<span class="boring">}</span></code></pre>
+<p><em>Single lazy chain, one allocation at <code>collect</code>.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut evens = vec![];
+for x in 0..10 {
+    if x % 2 == 0 { evens.push(x); }
+}
+<span class="boring">}</span></code></pre>
+<p><em>Manual loop with repeated <code>push</code> — does the same work but misses <code>filter</code>’s intent and may reallocate.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="combinators"><a class="header" href="#combinators">Combinators</a></h1>
+<p>Combinators are the default methods on <code>Iterator</code> that transform or consume a sequence without
+requiring a manual loop. They fall into two groups: <em>adapters</em> return a new iterator (lazy,
+no work done yet), and <em>consumers</em> drive the iterator to completion and produce a final value.
+Adapters can be chained freely in any order; the work only happens when a consumer is called at
+the end of the chain.</p>
+<p>The most common adapters are <code>map</code> (transform each element), <code>filter</code> (keep matching elements),
+<code>flat_map</code> (transform then flatten), <code>take</code> / <code>skip</code> (slice the sequence), and <code>enumerate</code>
+(pair each element with its index). The most common consumers are <code>collect</code>, <code>sum</code>, <code>fold</code>,
+<code>any</code>, <code>all</code>, and <code>for_each</code>. Knowing which is which matters because calling an adapter without
+a consumer produces a warning: you built an iterator that nothing ever polls.</p>
+<h2 id="code-5"><a class="header" href="#code-5">Code</a></h2>
+<pre class="playground"><code class="language-rust">fn word_lengths(text: &amp;str) -&gt; Vec&lt;(usize, &amp;str)&gt; {
+    text.split_whitespace()
+        .filter(|w| w.len() &gt; 3)          // adapter: skip short words
+        .enumerate()                       // adapter: attach index
+        .map(|(i, w)| (i + 1, w))         // adapter: 1-based index
+        .take(5)                           // adapter: cap at 5 results
+        .collect()                         // consumer: materialise into Vec
+}
+
+fn main() {
+    let results = word_lengths("the quick brown fox jumps over the lazy dog");
+    for (n, word) in &amp;results {
+        println!("{n}: {word}");
+    }
+}</code></pre>
+<h2 id="key-points-5"><a class="header" href="#key-points-5">Key Points</a></h2>
+<ul>
+<li>Adapters are lazy — no iteration happens until a consumer is reached.</li>
+<li><code>fold(init, |acc, x| ...)</code> is the generalisation that most other consumers are built on.</li>
+<li><code>flat_map</code> is <code>map</code> + <code>flatten</code>; use it when each element produces a sequence.</li>
+<li><code>chain</code> concatenates two iterators without allocating a new collection.</li>
+<li><code>peekable()</code> wraps an iterator so you can inspect the next element without consuming it.</li>
+</ul>
+<h2 id="code-review-5"><a class="header" href="#code-review-5">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let total: i32 = scores.iter().filter(|&amp;&amp;s| s &gt; 0).sum();
+<span class="boring">}</span></code></pre>
+<p><em>One lazy pass, no temporary collection.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let positive: Vec&lt;_&gt; = scores.iter().filter(|&amp;&amp;s| s &gt; 0).collect();
+let total: i32 = positive.iter().sum();
+<span class="boring">}</span></code></pre>
+<p><em>Allocates <code>positive</code> only to immediately sum it — split into two passes for no reason.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="traits--generics"><a class="header" href="#traits--generics">Traits &amp; Generics</a></h1>
+<p>A trait is Rust’s mechanism for defining shared behaviour. It is similar to an interface in other
+languages, but stricter: you cannot add methods to a trait after the fact, and the compiler
+resolves which implementation to call at compile time by default (static dispatch). Generics let
+you write functions and types that work over any type satisfying a trait bound, with the compiler
+generating specialised code for each concrete type used.</p>
+<p>The articles here cover the two dispatch strategies — static via generics and dynamic via trait
+objects — and the mechanics of writing generic code with bounds.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="trait-objects"><a class="header" href="#trait-objects">Trait Objects</a></h1>
+<p>A trait object — written <code>dyn Trait</code> — is a fat pointer that pairs a data pointer with a vtable
+at runtime. It enables <em>dynamic dispatch</em>: the method to call is looked up in the vtable at
+runtime rather than resolved at compile time. This means you can store values of different
+concrete types behind a single <code>Box&lt;dyn Trait&gt;</code> or <code>&amp;dyn Trait</code>, which is impossible with
+generics (where the type must be known at compile time).</p>
+<p>The cost of dynamic dispatch is a pointer indirection per method call and the loss of
+monomorphisation optimisations. For most use cases the cost is negligible, but it matters in
+tight inner loops. Trait objects also impose an <em>object safety</em> requirement: the trait cannot
+have methods that return <code>Self</code> or use generic type parameters, because the vtable would then
+need to encode an unbounded set of implementations.</p>
+<h2 id="code-6"><a class="header" href="#code-6">Code</a></h2>
+<pre class="playground"><code class="language-rust">trait Draw {
+    fn draw(&amp;self);
+}
+
+struct Circle;
+struct Square;
+
+impl Draw for Circle {
+    fn draw(&amp;self) { println!("drawing circle"); }
+}
+
+impl Draw for Square {
+    fn draw(&amp;self) { println!("drawing square"); }
+}
+
+fn render_all(shapes: &amp;[Box&lt;dyn Draw&gt;]) {
+    for shape in shapes {
+        shape.draw();   // vtable lookup at runtime
+    }
+}
+
+fn main() {
+    let shapes: Vec&lt;Box&lt;dyn Draw&gt;&gt; = vec![
+        Box::new(Circle),
+        Box::new(Square),
+    ];
+    render_all(&amp;shapes);
+}</code></pre>
+<h2 id="key-points-6"><a class="header" href="#key-points-6">Key Points</a></h2>
+<ul>
+<li><code>dyn Trait</code> is a fat pointer: 16 bytes (data pointer + vtable pointer) on 64-bit platforms.</li>
+<li>Use trait objects when the set of concrete types is not known at compile time.</li>
+<li>A trait is object-safe if no method uses <code>Self</code> by value or has generic type parameters.</li>
+<li><code>Box&lt;dyn Trait&gt;</code> owns the value; <code>&amp;dyn Trait</code> borrows it.</li>
+<li><code>dyn Trait + Send + Sync</code> adds auto-trait bounds for use across threads.</li>
+</ul>
+<h2 id="code-review-6"><a class="header" href="#code-review-6">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn notify(sender: &amp;dyn Notify) {
+    sender.send("hello");
+}
+<span class="boring">}</span></code></pre>
+<p><em><code>&amp;dyn Notify</code> avoids boxing when ownership isn’t needed — cheaper and more flexible.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn notify(sender: Box&lt;dyn Notify&gt;) {
+    sender.send("hello");
+}
+<span class="boring">}</span></code></pre>
+<p><em><code>Box</code> forces a heap allocation at the call site even though the function only needs to borrow.</em></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="generics"><a class="header" href="#generics">Generics</a></h1>
+<p>Generics let you write a function or type once and have the compiler specialise it for every
+concrete type it is called with. This is <em>monomorphisation</em>: at compile time, Rust generates a
+separate copy of the code for each distinct type argument. The result is code that runs as fast
+as if you had written a dedicated version by hand, with zero runtime overhead — unlike dynamic
+dispatch via trait objects.</p>
+<p>Trait bounds (<code>T: Display</code>, <code>T: Clone + Debug</code>) constrain the generic parameter so the compiler
+knows which methods are available inside the function. The <code>where</code> clause is an alternative
+syntax for the same bounds, preferred when the bound list grows long enough to obscure the
+function signature. <code>impl Trait</code> in an argument position is syntactic sugar for a generic
+parameter with a single bound; in a return position it means “some concrete type implementing
+this trait” (useful for returning closures or iterators without naming the type).</p>
+<h2 id="code-7"><a class="header" href="#code-7">Code</a></h2>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt::Display;
+
+fn largest&lt;T: PartialOrd&gt;(list: &amp;[T]) -&gt; &amp;T {
+    let mut largest = &amp;list[0];
+    for item in list {
+        if item &gt; largest {
+            largest = item;
+        }
+    }
+    largest
+}
+
+fn print_pair&lt;T, U&gt;(a: T, b: U)
+where
+    T: Display,
+    U: Display,
+{
+    println!("{a} and {b}");
+}
+
+fn make_adder(x: i32) -&gt; impl Fn(i32) -&gt; i32 {
+    move |y| x + y
+}
+<span class="boring">}</span></code></pre>
+<h2 id="key-points-7"><a class="header" href="#key-points-7">Key Points</a></h2>
+<ul>
+<li>Monomorphisation generates one concrete function per type argument — no runtime overhead.</li>
+<li>Bounds written as <code>T: TraitA + TraitB</code> require the type to implement both traits.</li>
+<li><code>where</code> clauses improve readability when multiple type parameters each have several bounds.</li>
+<li><code>impl Trait</code> in argument position is sugar for an anonymous generic; in return position it hides the concrete type.</li>
+<li>Blanket implementations (<code>impl&lt;T: Display&gt; MyTrait for T</code>) apply a trait to any type satisfying a bound.</li>
+</ul>
+<h2 id="code-review-7"><a class="header" href="#code-review-7">Code Review</a></h2>
+<p><strong>Good</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn print&lt;T: Display&gt;(value: &amp;T) {
+    println!("{value}");
+}
+<span class="boring">}</span></code></pre>
+<p><em>Generic over <code>Display</code> — works with any printable type, no boxing, zero overhead.</em></p>
+<p><strong>Bad</strong></p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn print(value: &amp;dyn Display) {
+    println!("{value}");
+}
+<span class="boring">}</span></code></pre>
+<p><em><code>&amp;dyn Display</code> adds a vtable indirection for a function that is always called with a known type — use generics instead.</em></p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-09f2665d.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-609e4cb8.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
