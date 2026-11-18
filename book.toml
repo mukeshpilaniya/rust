@@ -1,0 +1,10 @@
+[book]
+title       = "Rust Concepts"
+authors     = ["Mukesh Pilaniya"]
+language    = "en"
+src         = "src"
+
+[output.html]
+default-theme          = "navy"
+git-repository-url     = "https://github.com/mukeshpilaniya/rust"
+edit-url-template      = "https://github.com/mukeshpilaniya/rust/edit/main/{path}"
